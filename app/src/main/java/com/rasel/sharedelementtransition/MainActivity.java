@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.view.ViewCompat;
+import androidx.transition.Fade;
 
 import android.view.View;
 import android.view.Menu;
@@ -25,18 +26,31 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setTitle("First Name");
+
+        getWindow().setExitTransition(null);  // needed to stop the toolbar flashing during the transition
+
+      /*  Fade fade = new Fade();    // can use this when both activity uses the default action bar
+        View decor = getWindow().getDecorView();
+        fade.excludeTarget(decor.findViewById(R.id.action_bar_container), true);
+        fade.excludeTarget(android.R.id.statusBarBackground, true);
+        fade.excludeTarget(android.R.id.navigationBarBackground, true);
+
+        getWindow().setEnterTransition(fade);
+        getWindow().setExitTransition(fade); */
+
+
         final ImageView imageView = findViewById(R.id.image_activity_1);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
 
+                //Code for the shared element transition
                 Intent intent = new Intent(MainActivity.this, Main2Activity.class);
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                        MainActivity.this, imageView, ViewCompat.getTransitionName(imageView));
+                        MainActivity.this, imageView, "example_transition");
                 startActivity(intent, options.toBundle());
             }
         });
